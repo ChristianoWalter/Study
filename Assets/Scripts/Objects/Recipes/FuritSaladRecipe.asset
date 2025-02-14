@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 067297afc2356984187e92b69abaa5ec, type: 3}
+  m_Name: FuritSaladRecipe
+  m_EditorClassIdentifier: 
+  ingredients:
+  - {fileID: 11400000, guid: 87448be1cba6e9b4a9c345c1913039aa, type: 2}
+  - {fileID: 11400000, guid: 26a7ec8ce47c5db4db78b46e339ee836, type: 2}
+  - {fileID: 0}
+  result: {fileID: 11400000, guid: 44aff21498e0293489b4628bff63cf82, type: 2}

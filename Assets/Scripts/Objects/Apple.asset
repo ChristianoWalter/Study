@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc171275c5defb44899d6fa600b39466, type: 3}
+  m_Name: Apple
+  m_EditorClassIdentifier: 
+  itemName: "Ma\xE7\xE3"
+  itemImage: {fileID: 7293598183456022363, guid: 7292f7ef060e3444bb907e6fd67c7e93, type: 3}
+  description: "Ma\xE7\xE3"
+  canSell: 1
+  value: 2
+  interactable: {fileID: 0}
