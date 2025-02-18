@@ -27,12 +27,18 @@ public class InventoryController : MonoBehaviour
         SetCoins(PlayerPrefs.GetInt("Currency"));     
     }
 
-    public void SetItem(Item item)
+    public void AddItem(Item item)
     {
         if (items.Count == maxInventorySpace) return;
         items.Add(item);
         OnInventoryChange.Invoke(items);
         //UIManager.UpdateInventoryImages();
+    }
+
+    public void RemoveItem(Item item)
+    {
+        items.Remove(item);
+        OnInventoryChange.Invoke(items);
     }
 
     public void SetCoins(int value)
@@ -46,6 +52,11 @@ public class InventoryController : MonoBehaviour
     {
         maxInventorySpace++;
         UIManager.AddSlot(inventorySlot);
+    }
+
+    public void UpdateUI()
+    {
+
     }
 
     public void SellItems()

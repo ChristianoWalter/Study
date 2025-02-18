@@ -3001,9 +3001,93 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 949060073046137418, guid: c9b524248c5386b4b9ff962d19f3c015, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 949060073046137418, guid: c9b524248c5386b4b9ff962d19f3c015, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 949060073046137418, guid: c9b524248c5386b4b9ff962d19f3c015, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 949060073046137418, guid: c9b524248c5386b4b9ff962d19f3c015, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3968842681794882505, guid: c9b524248c5386b4b9ff962d19f3c015, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3968842681794882505, guid: c9b524248c5386b4b9ff962d19f3c015, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3968842681794882505, guid: c9b524248c5386b4b9ff962d19f3c015, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3968842681794882505, guid: c9b524248c5386b4b9ff962d19f3c015, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4391286163061500447, guid: c9b524248c5386b4b9ff962d19f3c015, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4391286163061500447, guid: c9b524248c5386b4b9ff962d19f3c015, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4391286163061500447, guid: c9b524248c5386b4b9ff962d19f3c015, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4391286163061500447, guid: c9b524248c5386b4b9ff962d19f3c015, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4697178352563470187, guid: c9b524248c5386b4b9ff962d19f3c015, type: 3}
       propertyPath: m_Name
       value: GameController
+      objectReference: {fileID: 0}
+    - target: {fileID: 6021224128257248068, guid: c9b524248c5386b4b9ff962d19f3c015, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6021224128257248068, guid: c9b524248c5386b4b9ff962d19f3c015, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6021224128257248068, guid: c9b524248c5386b4b9ff962d19f3c015, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6021224128257248068, guid: c9b524248c5386b4b9ff962d19f3c015, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6973139112936630913, guid: c9b524248c5386b4b9ff962d19f3c015, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6973139112936630913, guid: c9b524248c5386b4b9ff962d19f3c015, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6973139112936630913, guid: c9b524248c5386b4b9ff962d19f3c015, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6973139112936630913, guid: c9b524248c5386b4b9ff962d19f3c015, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7219965042004362002, guid: c9b524248c5386b4b9ff962d19f3c015, type: 3}
+      propertyPath: maxInventorySpace
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7262414449891582619, guid: c9b524248c5386b4b9ff962d19f3c015, type: 3}
       propertyPath: m_LocalPosition.x

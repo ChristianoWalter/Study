@@ -1,15 +1,17 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using NUnit.Framework.Interfaces;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class CraftingManager : MonoBehaviour
 {
     [Header("Inventory Slots")]
     InventoryController inventoryController;
-    public List<Item> itemsInInventory;
+    public List<GameObject> itemsInInventory;
     public GameObject itemPrefab;
 
 
@@ -22,9 +24,11 @@ public class CraftingManager : MonoBehaviour
 
     public List<Item> itemList;
 
+    public List<GameObject> ingredientObjects;
+
     public Recipes[] recipes;
 
-    public Item resultItem;
+    public GameObject resultItem;
 
     public CraftSlot resultSlot;
 
@@ -35,10 +39,20 @@ public class CraftingManager : MonoBehaviour
 
     private void OnEnable()
     {
-        itemsInInventory = inventoryController.items;
+        for (int i = 0; i < inventoryController.items.Count; i++)
+        {
+            GameObject item = Instantiate(itemPrefab, slots[0].gameObject.transform);
+            item.GetComponent<CraftItem>().item = inventoryController.items[i];
+            itemsInInventory.Add(item);
+        }
+    }
+
+    private void OnDisable()
+    {
         for (int i = 0; i < itemsInInventory.Count; i++)
         {
-            Instantiate(itemPrefab, slots[0].gameObject.transform).GetComponent<CraftItem>().item = itemsInInventory[i];
+            Destroy(itemsInInventory[i]);
+            itemsInInventory.RemoveAt(i);
         }
     }
 
@@ -63,14 +77,26 @@ public class CraftingManager : MonoBehaviour
 
                 if (nearestSlot != slots[0])
                 {
-                    nearestSlot.gameObject.SetActive(true);
+                    /*nearestSlot.gameObject.SetActive(true);
                     nearestSlot.GetComponent<Image>().sprite = currentItem.itemImage;
-                    nearestSlot.item = currentItem;
+                    nearestSlot.item = currentItem;*/
+                    GameObject _ingredientObject = Instantiate(itemPrefab, slots[nearestSlot.index].gameObject.transform);
+                    _ingredientObject.GetComponent<CraftItem>().SetToCraftingTable(currentItem);
                     itemList[nearestSlot.index] = currentItem;
+                    for (int i = 0; itemList.Count > i; i++)
+                    {
+                        if (itemList[i] == currentItem)
+                        {
+                            ingredientObjects[i] = _ingredientObject;
+                        }
+                    }
                 }
                 else
                 {
-                    Instantiate(itemPrefab, slots[0].gameObject.transform).GetComponent<CraftItem>().item = currentItem;
+                    GameObject item = Instantiate(itemPrefab, slots[0].gameObject.transform);
+                    item.GetComponent<CraftItem>().item = currentItem;
+                    itemsInInventory.Add(item);
+                    inventoryController.AddItem(currentItem);
                 }
                 currentItem = null;
 
@@ -104,35 +130,56 @@ public class CraftingManager : MonoBehaviour
 
             if (result)
             {
-                resultSlot.item = recipes[i].result;
+                /*resultSlot.item = recipes[i].result;
                 resultItem = recipes[i].result;
                 resultSlot.gameObject.SetActive(true);
-                resultSlot.GetComponent<Image>().sprite = recipes[i].result.itemImage;
+                resultSlot.GetComponent<Image>().sprite = recipes[i].result.itemImage;*/
+                resultItem = Instantiate(itemPrefab, resultSlot.gameObject.transform);
+                resultItem.GetComponent<CraftItem>().SetToResult(recipes[i].result);
                 break;
             }
             else
             {
-                resultItem = null;
+                /*resultItem = null;
                 resultSlot.item = null;
-                resultSlot.gameObject.SetActive(false);
+                resultSlot.gameObject.SetActive(false);*/
+                Destroy(resultItem);
             }
         } 
     }
 
-    public void OnMouseDownItem(Item item)
+    public void OnMouseDownItem(Item item, ItemType itemType)
     {
         if (currentItem == null) 
         {
             currentItem = item;
             customCursor.gameObject.SetActive(true);
             customCursor.sprite = currentItem.itemImage;
-            for (int i = 0; i < itemsInInventory.Count; i++)
+
+            switch (itemType)
             {
-                if (itemsInInventory[i] == item)
-                {
-                    itemsInInventory.RemoveAt(i);
+                case ItemType.None:
+                    inventoryController.RemoveItem(item);
                     break;
-                }
+                case ItemType.Ingredient:
+                    for (int i = 0; i < itemList.Count; i++)
+                    {
+                        if (itemList[i] == item)
+                        {
+                            itemList[i] = null;
+                            CheckForCompletedRecipes();
+                            break;
+                        }
+                    }
+                    break;
+                case ItemType.Result:
+                    for (int i = 0; i < itemList.Count; i++)
+                    {
+                        itemList[i] = null;
+                        Destroy(ingredientObjects[i]);
+                    }
+                    //resultItem = null;
+                    break;
             }
         }
     }

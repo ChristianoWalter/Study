@@ -12,7 +12,7 @@ public class CollectableItem : Interactable
     public override void Interact()
     {
         if (inventoryController.items.Count == inventoryController.maxInventorySpace) return;
-        inventoryController.SetItem(item);
+        inventoryController.AddItem(item);
         Destroy(gameObject);
     }
 }
