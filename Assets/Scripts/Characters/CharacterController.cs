@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class CharacterController : MonoBehaviour
@@ -13,25 +14,26 @@ public class CharacterController : MonoBehaviour
     [Header("Components")]
     [SerializeField] protected Rigidbody2D rb;
     [SerializeField] protected Animator anim;
+    [SerializeField] GameObject visual;
 
     protected virtual void Awake()
     {
         currentHealth = maxHealth;
     }
 
-    private void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
         Movement();
     }
 
-    protected void Movement()
+    protected virtual void Movement()
     {
         rb.linearVelocity = direction * speed;
-        if ((rb.linearVelocity.x > 0 && transform.localScale.x < 0) || (rb.linearVelocity.x < 0 && transform.localScale.x > 0))
+        if ((rb.linearVelocity.x > 0 && visual.transform.localScale.x < 0) || (rb.linearVelocity.x < 0 && visual.transform.localScale.x > 0))
         {
-            Vector2 _localScale = transform.localScale;
+            Vector2 _localScale = visual.transform.localScale;
             _localScale.x *= -1f;
-            transform.localScale = _localScale;
+            visual.transform.localScale = _localScale;
         }
 
         anim.SetFloat("Speed", Mathf.Abs(rb.linearVelocity.x) + Mathf.Abs(rb.linearVelocity.y));
@@ -40,6 +42,11 @@ public class CharacterController : MonoBehaviour
     public void TakeDamage(float damage)
     {
         currentHealth = Mathf.Max(currentHealth - damage, 0);
+
+        if (currentHealth == 0)
+        {
+            StartCoroutine(DeathHandle());
+        }
     }
 
     public void TakeHeal(float heal)
@@ -47,5 +54,8 @@ public class CharacterController : MonoBehaviour
         currentHealth = Mathf.Min(currentHealth + heal, maxHealth);
     }
 
-    
+    protected virtual IEnumerator DeathHandle()
+    {
+        yield return null;
+    }
 }
