@@ -139,6 +139,8 @@ public class PlayerController : CharacterController
             collider.enabled = false;
         }
 
+        speed = 0;
+
         PlayerController playerController = gameObject.GetComponent<PlayerController>();
         if (playerController != null)
         {

@@ -68,7 +68,7 @@ public class EnemyController : CharacterController
         Vector2 newPosition = Vector2.MoveTowards(rb.position, lastSeenPosition, speed * Time.fixedDeltaTime);
         rb.MovePosition(newPosition);
 
-        if (Vector2.Distance(rb.position, lastSeenPosition) < .1f)
+        if (Vector2.Distance(rb.position, lastSeenPosition) < 1f)
         {
             searchTimer -= Time.fixedDeltaTime; 
             if (searchTimer <= 0)
