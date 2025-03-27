@@ -1,6 +1,6 @@
 using System;
 using System.Collections;
-using Unity.VisualScripting.InputSystem;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -12,8 +12,8 @@ public class PlayerController : CharacterController
     [SerializeField] Interactable interactableTrigged;
 
     [Header("Attack variables")]
-    public GameObject attackHitbox;
-    public float attackDuration;
+    public GameObject weapon;
+    public Weapons weaponEquipped;
     private bool canAttack = true;
     private bool holdingMouse = false;
 
@@ -29,22 +29,23 @@ public class PlayerController : CharacterController
             Destroy(gameObject);
         }
 
-        if (attackHitbox != null)
+        if (weapon == null)
         {
-            attackHitbox.SetActive(false);
+            weapon.SetActive(false);
         }
     }
 
     private void Update()
     {
-        if (attackHitbox != null && canAttack)
+        if (weapon != null)
         {
-            RotateAttackHitboxTowardsMouse();
+            RotateWeaponTowardsMouse();
 
-            if (Input.GetMouseButtonDown(0) && !holdingMouse)
+            if (holdingMouse && !canAttack) return;
+            if (Input.GetMouseButtonDown(0))
             {
                 holdingMouse = true;
-                StartCoroutine(PerformAttack());
+                Attacking();
             }
         }
 
@@ -54,8 +55,8 @@ public class PlayerController : CharacterController
         }
     }
 
-
-    private void RotateAttackHitboxTowardsMouse()
+    #region AttackSystem
+    private void RotateWeaponTowardsMouse()
     {
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePosition.z = 0;
@@ -64,24 +65,39 @@ public class PlayerController : CharacterController
 
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
-        attackHitbox.transform.rotation = Quaternion.Euler(0, 0, angle);
-
-        float hitboxDistance = 1.5f;
-        attackHitbox.transform.position = transform.position + (Vector3)direction * hitboxDistance;
+        weapon.transform.rotation = Quaternion.Euler(0, 0, angle);
     }
 
-    IEnumerator PerformAttack()
+    public void Attacking()
     {
         canAttack = false;
+        weapon.GetComponent<PlayerWeapon>().Attack();
 
-        attackHitbox.SetActive(true);
+        StartCoroutine(Recharge());
+    }
 
-        yield return new WaitForSeconds(attackDuration);
-
-        attackHitbox.SetActive(false);
+    IEnumerator Recharge()
+    {
+        yield return new WaitForSeconds(weaponEquipped.cooldown);
 
         canAttack = true;
     }
+
+    public void UpdateWeapon(Weapons _newWeapon)
+    {
+        if (_newWeapon == null)
+        {
+            weapon.SetActive(false);
+            canAttack = false;
+        }
+        else
+        {
+            weapon.SetActive(true);
+            canAttack = true;
+        }
+        weapon.GetComponent<PlayerWeapon>().ChangeWeapon(_newWeapon);
+    }
+    #endregion
 
     private void OnTriggerEnter2D(Collider2D other)
     {
