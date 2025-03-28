@@ -3,15 +3,10 @@ using UnityEngine;
 public class Attack : MonoBehaviour
 {
     [HideInInspector] public float damage;
-     public float speed;
+    public float speed;
     [HideInInspector] public Vector2 direction;
     [SerializeField] GameObject effect;
     [SerializeField] Rigidbody2D rb;
-
-    private void Update()
-    {
-        
-    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -19,8 +14,11 @@ public class Attack : MonoBehaviour
         {
             enemy.GetComponent<CharacterController>().TakeDamage(damage);
         }
-        if (effect != null) Instantiate(effect, transform.position, Quaternion.identity);
-        Destroy(gameObject);
+        if (effect != null)
+        {
+            Instantiate(effect, transform.position, Quaternion.identity);
+            Destroy(gameObject);
+        }
     }
 
     public void UpdateAttackSettings(float _newDamage, float _newSpeed, Vector2 _direction)
@@ -29,8 +27,11 @@ public class Attack : MonoBehaviour
         speed = _newSpeed;
         direction = _direction;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        rb.rotation = angle;
-        if (rb != null) rb.linearVelocity = _direction.normalized * speed;
+        if (rb != null)
+        {
+           rb.rotation = angle;
+            rb.linearVelocity = _direction.normalized * speed;
+        }
     }
 
     public void DestroySelf()

@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: be7427d5ec5c3dd4da28f63ccfa8c083, type: 3}
-  m_Name: FireStick
+  m_Name: ElectricStick
   m_EditorClassIdentifier: 
-  itemName: Cajado de fogo
-  itemImage: {fileID: -938530303739530108, guid: fef49cb0b8f6a884482ad7c02364ad56, type: 3}
-  description: Cajado que solta fogo
+  itemName: Cajado da eletricidade
+  itemImage: {fileID: 5466180465015574931, guid: fef49cb0b8f6a884482ad7c02364ad56, type: 3}
+  description: "Despara um raio el\xE9trico"
   canSell: 0
   value: 100
   interactable: {fileID: 0}
-  damage: 5
-  projectileSpeed: 8
-  weaponVisual: {fileID: -938530303739530108, guid: fef49cb0b8f6a884482ad7c02364ad56, type: 3}
+  damage: 3
+  projectileSpeed: 12
+  weaponVisual: {fileID: 5466180465015574931, guid: fef49cb0b8f6a884482ad7c02364ad56, type: 3}
   type: 0
-  cooldown: 0.6
-  ammo: {fileID: 4155368922209106943, guid: 156d1c1c59b7d9344be6da2bdba345b4, type: 3}
+  cooldown: 0.4
+  ammo: {fileID: 4469373006519409978, guid: 4fb954c9e36aa5d4db62af2fb2b80275, type: 3}

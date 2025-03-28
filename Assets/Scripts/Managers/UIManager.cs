@@ -14,8 +14,13 @@ public class UIManager : MonoBehaviour
 
     public List<Image> inventoryImages;
 
+    public List<Image> selectedImages;
+
     [SerializeField] GameObject inventorySlot;
+    [SerializeField] GameObject selectedSlot;
     [SerializeField] GameObject visualSlot;
+
+    [SerializeField] private Color selectedColor;
 
     private void Awake()
     {
@@ -32,6 +37,8 @@ public class UIManager : MonoBehaviour
         inventoryController.OnInventoryChange += UpdateInventoryImages;
 
         inventoryController.OnCoinsChange += UpdateCoinsValue;
+
+        inventoryController.OnChangeSelectedItem += UpdateSelectedSlot;
     }
 
 
@@ -57,12 +64,33 @@ public class UIManager : MonoBehaviour
 
     }
 
-    public static void AddSlot(Image slot)
+    public void UpdateSelectedSlot(int _index)
+    {
+        for (int i = 0; i < selectedImages.Count; i++)
+        {
+
+            if (_index != i)
+            {
+                selectedImages[i].color = Color.clear;
+            }
+            else
+            {
+                selectedImages[i].color = selectedColor;
+            }
+
+        }
+    }
+
+    public static void AddSlot(Image slot, Image _selectedSlot)
     {
         Image newSlot = Instantiate(slot, instance.inventorySlot.transform);
         Instantiate(slot, instance.visualSlot.transform);
         newSlot.gameObject.SetActive(false);
         instance.inventoryImages.Add(newSlot);
+
+        Image newSelectedSlot = Instantiate(_selectedSlot, instance.selectedSlot.transform);
+        newSelectedSlot.color = Color.clear;
+        instance.selectedImages.Add(newSelectedSlot);
     }
 
     public static void UpdateCoinsValue(int value)

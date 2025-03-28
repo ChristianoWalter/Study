@@ -13,7 +13,7 @@ public class PlayerController : CharacterController
 
     [Header("Attack variables")]
     public GameObject weapon;
-    public Weapons weaponEquipped;
+    public Item equippedItem;
     private bool canAttack = true;
     private bool holdingMouse = false;
 
@@ -32,6 +32,7 @@ public class PlayerController : CharacterController
         if (weapon == null)
         {
             weapon.SetActive(false);
+            canAttack = false;
         }
     }
 
@@ -78,24 +79,29 @@ public class PlayerController : CharacterController
 
     IEnumerator Recharge()
     {
-        yield return new WaitForSeconds(weaponEquipped.cooldown);
+        if (equippedItem is Weapons _weapon)
+        {
+            yield return new WaitForSeconds(_weapon.cooldown);
 
-        canAttack = true;
+            canAttack = true;
+        }
     }
 
-    public void UpdateWeapon(Weapons _newWeapon)
+    public void UpdateEquippedItem(Item _newItem)
     {
-        if (_newWeapon == null)
+        if (_newItem == null)
         {
             weapon.SetActive(false);
             canAttack = false;
         }
         else
         {
+            if (_newItem is not Weapons) return;
             weapon.SetActive(true);
             canAttack = true;
         }
-        weapon.GetComponent<PlayerWeapon>().ChangeWeapon(_newWeapon);
+        if (_newItem is Weapons _weapon) weapon.GetComponent<PlayerWeapon>().ChangeWeapon(_weapon);
+        equippedItem = _newItem;
     }
     #endregion
 

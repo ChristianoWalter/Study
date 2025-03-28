@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using UnityEditor.PackageManager;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class InventoryController : MonoBehaviour
@@ -10,8 +10,11 @@ public class InventoryController : MonoBehaviour
     public int maxInventorySpace;
     public int coins;
     public Image inventorySlot;
+    public Image selectedSlot;
+    private int equippedItemIndex;
 
     public event Action<List<Item>> OnInventoryChange;
+    public event Action<int> OnChangeSelectedItem;
     public event Action<int> OnCoinsChange;
 
     private void Awake()
@@ -31,6 +34,7 @@ public class InventoryController : MonoBehaviour
     {
         if (items.Count == maxInventorySpace) return;
         items.Add(item);
+        UpdateEquippedItem(0);
         OnInventoryChange.Invoke(items);
         //UIManager.UpdateInventoryImages();
     }
@@ -51,7 +55,30 @@ public class InventoryController : MonoBehaviour
     public void UpgradeInventory()
     {
         maxInventorySpace++;
-        UIManager.AddSlot(inventorySlot);
+        UIManager.AddSlot(inventorySlot, selectedSlot);
+    }
+
+    public void UpdateEquippedItem(int amount)
+    {
+        if (items == null) return;
+        if (items.Count == 1)
+        {
+            equippedItemIndex = 0;
+        }
+        else
+        {
+            equippedItemIndex += amount;
+            if (equippedItemIndex > items.Count - 1)
+            {
+                equippedItemIndex = 0;
+            }
+            else if (equippedItemIndex < 0)
+            {
+                equippedItemIndex = items.Count - 1;
+            }
+        }
+        PlayerController.instance.UpdateEquippedItem(items[equippedItemIndex]);
+        OnChangeSelectedItem.Invoke(equippedItemIndex);
     }
 
     public void UpdateUI()
@@ -71,5 +98,10 @@ public class InventoryController : MonoBehaviour
         }
         OnInventoryChange.Invoke(items);
         //UIManager.UpdateInventoryImages();
+    }
+
+    public void ChangeSelectedItemInput(InputAction.CallbackContext context)
+    {
+        if (context.performed) UpdateEquippedItem(((int)context.ReadValue<float>()));
     }
 }
