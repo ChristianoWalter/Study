@@ -4,7 +4,7 @@ public class CollectableItem : Interactable
 {
     public Item item;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         inventoryController = FindObjectOfType<InventoryController>();
     }

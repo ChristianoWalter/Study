@@ -23,11 +23,14 @@ public class InventoryController : MonoBehaviour
         {
             PlayerPrefs.SetInt("Currency", 0);
         }
+
+        
     }
 
     private void Start()
     {
-        SetCoins(PlayerPrefs.GetInt("Currency"));     
+        SetCoins(PlayerPrefs.GetInt("Currency"));
+        //CreateInventory();
     }
 
     public void AddItem(Item item)
@@ -56,6 +59,14 @@ public class InventoryController : MonoBehaviour
     {
         maxInventorySpace++;
         UIManager.AddSlot(inventorySlot, selectedSlot);
+    }
+
+    public void CreateInventory()
+    {
+        for(int i = 0; i < maxInventorySpace; i++)
+        {
+            UIManager.AddSlot(inventorySlot, selectedSlot);
+        }
     }
 
     public void UpdateEquippedItem(int amount)

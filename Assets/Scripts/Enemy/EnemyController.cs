@@ -22,6 +22,11 @@ public class EnemyController : CharacterController
     public int rayCount;
     public float coneAngle;
 
+    [SerializeField] GameObject cautionSymbol;
+    [SerializeField] GameObject searchSymbol;
+
+    [SerializeField] bool chaser;
+
     private int currentWalkPointIndex;
     private bool isWaiting;
     private Transform player;
@@ -33,33 +38,52 @@ public class EnemyController : CharacterController
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        if (walkPoints.Length > 0)
+        if (walkPoints != null) 
+        { 
+            if (walkPoints.Length > 0)
+            {
+                transform.position = walkPoints[0].position;
+            }
+        }
+
+        if (chaser)
         {
-            transform.position = walkPoints[0].position;
+            player = FindFirstObjectByType<PlayerController>().gameObject.transform;
         }
     }
 
     protected override void Movement()
     {
-        DetectPlayer();
-
-        switch (enemyState)
+        if (chaser)
         {
-            case EnemyStates.Patrol:
-                if (!isWaiting && walkPoints.Length > 0)
-                {
-                    MoveToWalkPoint();
-                }
-                break;
-            case EnemyStates.Attack:
-                if (player != null)
-                {
-                    MoveToPlayer();
-                }
-                break;
-            case EnemyStates.Search:
-                SearchForPlayer();
-                break;
+            MoveToPlayer();
+        }
+        else
+        {
+            DetectPlayer();
+            cautionSymbol.SetActive(false);
+            searchSymbol.SetActive(false);
+
+            switch (enemyState)
+            {
+                case EnemyStates.Patrol:
+                    if (!isWaiting && walkPoints.Length > 0)
+                    {
+                        MoveToWalkPoint();
+                    }
+                    break;
+                case EnemyStates.Attack:
+                    if (player != null)
+                    {
+                        MoveToPlayer();
+                        cautionSymbol.SetActive(true);
+                    }
+                    break;
+                case EnemyStates.Search:
+                    SearchForPlayer();
+                    searchSymbol.SetActive(true);
+                    break;
+            }
         }
     }
 

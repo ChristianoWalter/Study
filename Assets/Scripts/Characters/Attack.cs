@@ -7,6 +7,7 @@ public class Attack : MonoBehaviour
     [HideInInspector] public Vector2 direction;
     [SerializeField] GameObject effect;
     [SerializeField] Rigidbody2D rb;
+    [SerializeField] bool destroyOnContact;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -17,6 +18,10 @@ public class Attack : MonoBehaviour
         if (effect != null)
         {
             Instantiate(effect, transform.position, Quaternion.identity);
+            
+        }
+        if (destroyOnContact) 
+        {
             Destroy(gameObject);
         }
     }

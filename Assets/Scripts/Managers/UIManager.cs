@@ -10,12 +10,17 @@ public class UIManager : MonoBehaviour
 
     public InventoryController inventoryController;
 
+    public GameManager gameManager;
+
     public TextMeshProUGUI coinsValueTxt;
+
+    public TextMeshProUGUI keysQuantityTxt;
 
     public List<Image> inventoryImages;
 
     public List<Image> selectedImages;
 
+    [SerializeField] GameObject victoryScreen;
     [SerializeField] GameObject inventorySlot;
     [SerializeField] GameObject selectedSlot;
     [SerializeField] GameObject visualSlot;
@@ -33,12 +38,16 @@ public class UIManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        inventoryController = FindObjectOfType<InventoryController>();
+        gameManager = FindFirstObjectByType<GameManager>();
+
+        inventoryController = FindFirstObjectByType<InventoryController>();
         inventoryController.OnInventoryChange += UpdateInventoryImages;
 
         inventoryController.OnCoinsChange += UpdateCoinsValue;
 
         inventoryController.OnChangeSelectedItem += UpdateSelectedSlot;
+
+        gameManager.UpdateKeysQuantity += UpdateKeysQuantity;
     }
 
 
@@ -98,5 +107,16 @@ public class UIManager : MonoBehaviour
         if (instance == null) return;
 
         instance.coinsValueTxt.text = "Moedas: " + value.ToString();
+    }
+
+    public void UpdateKeysQuantity(int quantity)
+    {
+        keysQuantityTxt.text = "Chaves adquiridas: " + quantity.ToString();
+
+        if (quantity == gameManager.keysNeeded)
+        {
+            victoryScreen.SetActive(true);
+            Time.timeScale = 0f;
+        }
     }
 }

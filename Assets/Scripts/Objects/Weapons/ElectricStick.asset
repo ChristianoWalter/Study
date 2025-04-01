@@ -19,8 +19,8 @@ MonoBehaviour:
   value: 100
   interactable: {fileID: 0}
   damage: 3
-  projectileSpeed: 12
+  projectileSpeed: 15
   weaponVisual: {fileID: 5466180465015574931, guid: fef49cb0b8f6a884482ad7c02364ad56, type: 3}
   type: 0
-  cooldown: 0.4
+  cooldown: 0.2
   ammo: {fileID: 4469373006519409978, guid: 4fb954c9e36aa5d4db62af2fb2b80275, type: 3}

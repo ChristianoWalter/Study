@@ -15,6 +15,7 @@ public class PlayerController : CharacterController
     public GameObject weapon;
     public Item equippedItem;
     private bool canAttack = true;
+    private bool isReloading;
     private bool holdingMouse = false;
 
     protected override void Awake()
@@ -74,15 +75,16 @@ public class PlayerController : CharacterController
         canAttack = false;
         weapon.GetComponent<PlayerWeapon>().Attack();
 
-        StartCoroutine(Recharge());
+        StartCoroutine(Reload());
     }
 
-    IEnumerator Recharge()
+    IEnumerator Reload()
     {
         if (equippedItem is Weapons _weapon)
         {
+            isReloading = true;
             yield return new WaitForSeconds(_weapon.cooldown);
-
+            isReloading = false;
             canAttack = true;
         }
     }
@@ -98,7 +100,7 @@ public class PlayerController : CharacterController
         {
             if (_newItem is not Weapons) return;
             weapon.SetActive(true);
-            canAttack = true;
+            if (!isReloading) canAttack = true;
         }
         if (_newItem is Weapons _weapon) weapon.GetComponent<PlayerWeapon>().ChangeWeapon(_weapon);
         equippedItem = _newItem;
